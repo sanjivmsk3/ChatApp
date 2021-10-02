@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block home %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4 mx-auto">
+                <div class="card">
+                    <h2 class="card-text text-center">ChatApp</h2>
+                    <p class="fw-bold text-muted text-center">Sign up to see details.</p>
+                    <div class="card-body">
+                        <form action="{% url 'home' %}" method="post">
+                            {% csrf_token %}
+                            {{ forms|crispy }}
+                            <span class="mt-5">
+                                <h6>Captcha Verification</h6>
+                                <span class="d-flex">
+                                    <p style="font-size: 20px;">{{ no1 }} </p>
+                                    <p style="font-size: 20px;"> {{ opr }}</p>
+                                    <p style="font-size: 20px;">{{ no2 }} = </p>
+                                     <input type="number" class="form-control" placeholder="?" style="width: 100px; margin-left: 10px;" name="c-ans" required>
+                                </span>
+                                <input type="hidden" value="{{ ans }}" name="anss">
+                            </span>
+                            <div class="d-grid mt-3">
+                                <input type="submit" class="btn btn-success">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white text-center">
+                        <p>Do you have an account? <a href="{% url 'login' %}" style="text-decoration: none; font-weight: bold;">LogIn</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

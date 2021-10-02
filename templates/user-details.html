@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block home %}
+    <div class="container mt-5">
+        <div class="row">
+  <div class="col-3">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Home</a>
+      <a class="list-group-item list-group-item-action" id="list-add-post" data-bs-toggle="list" href="#add-post" role="tab" aria-controls="add-post">Add Post</a>
+      <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
+      <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="tab-content ml-3" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+         {% for foo in allPost %}
+             <div class="card mb-3" style="max-width: 950px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="{{ foo.image.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                          <span class="float-end">
+                              <a href="{% url 'update-post' foo.id %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-pencil-square text-warning" viewBox="0 0 16 16">
+                                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                              </a>
+                          </span>
+                        <h5 class="card-title">{{ foo.title }}</h5>
+                        <p class="card-text">{{ foo.description }}</p>
+                        <span class="d-flex">
+                            <p class="card-text"><small class="text-muted">Post By: <span class="badge rounded-pill bg-primary" style="font-size: 13px;">{{ foo.author.username }}</span></small></p>
+                            <p style="margin-left: 250px;" class="card-text"><small class="text-muted">Last updated {{ foo.date | timesince }} ago.</small></p>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+         {% endfor %}
+
+      </div>
+      <div class="tab-pane fade show" id="add-post" role="tabpanel" aria-labelledby="list-add-post">
+          <div class="container">
+              <div class="row">
+                  <div class="col-8 mx-auto">
+                      <div class="card">
+                          <h2 class="card-text text-center">Add Post</h2>
+                          <div class="card-body">
+                              <form action="{% url 'add-post' %}" method="post" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  {{ forms|crispy }}
+                                  <div class="d-grid mt-3">
+                                      <input type="submit" class="btn btn-success">
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+          <div class="container">
+               <div class="row">
+                   <div class="col-5 mx-auto">
+                       <div class="card">
+                           <h2 class="card-text mx-auto text-primary mt-3">User Profile</h2>
+                           <img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg" class="rounded-circle mx-auto" width="200" height="200" alt="...">
+                          </span>
+                           <div class="card-body">
+                               <hr>
+                               <table class="table table-hover">
+                                   <tr>
+                                       <th>@Username</th>
+                                       <td>{{ user.username }}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>Email</th>
+                                       <td>{{ user.email }}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>First Name</th>
+                                       <td>{{ user.first_name }}</td>
+                                   </tr>
+                                   <tr>
+                                       <th>Last Name</th>
+                                       <td>{{ user.last_name }}</td>
+                                   </tr>
+                               </table>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+          </div>
+      </div>
+      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+    </div>
+  </div>
+</div>
+    </div>
+{% endblock %}

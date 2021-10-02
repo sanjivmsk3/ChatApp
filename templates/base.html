@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+     <style>
+        @import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+        .login-block{
+            background: black;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #64b5f6, black);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #64b5f6, black); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        float:left;
+        width:100%;
+            height: 705px;
+        padding : 50px 0;
+        }
+        .banner-sec{background:url(https://static.pexels.com/photos/33972/pexels-photo.jpg)  no-repeat left bottom; background-size:cover; min-height:500px; border-radius: 0 10px 10px 0; padding:0;}
+        .con{background:#fff; border-radius: 10px;}
+        .carousel-inner{border-radius:0 10px 10px 0;}
+        .carousel-caption{text-align:left; left:5%;}
+        .login-sec{padding: 50px 30px; position:relative;}
+        .login-sec .copy-text{position:absolute; width:80%; bottom:20px; font-size:13px; text-align:center;}
+        .login-sec .copy-text i{color:#FEB58A;}
+        .login-sec .copy-text a{color:#E36262;}
+        .login-sec h2{margin-bottom:30px; font-weight:800; font-size:30px; color: #DE6262;}
+        .login-sec h2:after{content:" "; width:100px; height:5px; background:#FEB58A; display:block; margin-top:20px; border-radius:3px; margin-left:auto;margin-right:auto;}
+        .btn-login{background: #DE6262; color:#fff; font-weight:600;}
+        .banner-text{width:70%; position:absolute; bottom:40px; padding-left:20px;}
+        .banner-text h2{color:#fff; font-weight:600;}
+        .banner-text h2:after{content:" "; width:100px; height:5px; background:#FFF; display:block; margin-top:20px; border-radius:3px;}
+        .banner-text p{color:#fff;}
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'user-details' %}">ChatApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'user-details' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'chat' %}">
+                    Message
+                    <svg xmlns="http://www.w3.org/2000/svg" color="#0140FE" width="30" height="30" fill="currentColor" class="bi bi-chat-left-fill" viewBox="0 0 16 16">
+                      <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                    </svg>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+          {% else %}
+               <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'login' %}">LogIn</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'home' %}">SignUp</a>
+                </li>
+          {% endif %}
+      </ul>
+    {% if request.user.is_authenticated %}
+        <form class="d-flex" action="{% url 'search' %}">
+            <input class="form-control me-2" type="search" name="ssearch" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    {% endif %}
+    </div>
+  </div>
+</nav>
+
+{% block home %}
+
+{% endblock %}
+
+{% block script %}{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
